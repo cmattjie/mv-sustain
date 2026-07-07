@@ -106,7 +106,9 @@ either way.
 ## 4. Limitations
 
 - **No result in this report reaches conventional statistical
-  significance** (all Wilcoxon p ≥ 0.125). With only 12 paired repeats,
+  significance** (all Wilcoxon p ≥ 0.0625, across all four metrics in
+  `aggregate_summary.csv`, not just the two tabulated above). With only 12
+  paired repeats,
   this study is underpowered to detect the effect sizes observed here at
   p < 0.05. The trends above should be read as consistent with the
   hypothesis, not as proof of it.
