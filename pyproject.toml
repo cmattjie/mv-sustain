@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mv-sustain"
+version = "0.1.0"
+description = "A longitudinal, multi-visit extension of the SuStaIn subtype/stage inference algorithm"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
+authors = [
+    { name = "Christian Mattjie" },
+]
+dependencies = [
+    "numpy",
+    "scipy",
+    "pandas",
+    "torch",
+    "tqdm",
+    "pathos",
+    "matplotlib",
+    "pySuStaIn @ git+https://github.com/ucl-pond/pySuStaIn.git",
+]
+
+[project.urls]
+Homepage = "https://github.com/ucl-pond/pySuStaIn"
+
+[tool.setuptools]
+packages = ["mv_sustain"]
