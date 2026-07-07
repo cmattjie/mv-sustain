@@ -28,15 +28,20 @@ data points. The implementation is available at
 
 ## 2. Simulation Design
 
-Two-subtype synthetic cohorts (60 subjects, 4 biomarkers) were generated
-under two likelihoods used by SuStaIn: **ordinal** (discrete clinical
-rating-scale data, e.g. resembling MDS-UPDRS/MoCA-style items) and
-**z-score** (continuous biomarker data). For each likelihood, cohorts were
-simulated at four visit counts per patient (1, 2, 3, 6) and fit two ways —
-classic (stacked, independent-visit) and MV-SuStaIn (longitudinal,
-joint-likelihood) — on the *same* simulated data, so the only thing that
-differs between the two fits is the training likelihood mechanism, not the
-data.
+Two-subtype synthetic cohorts (**60 training patients**, **4 biomarkers**,
+**12 total events** — each biomarker crossing 3 ordinal score levels or 3
+z-score thresholds [1, 2, 3 SD], z-max 5) were generated under two
+likelihoods used by SuStaIn: **ordinal** (discrete clinical rating-scale
+data, e.g. resembling MDS-UPDRS/MoCA-style items; correctness probability
+0.9) and **z-score** (continuous biomarker data; noise σ=1.0, uniform noise
+logic). This is a single, comparatively favorable noise/difficulty setting
+— see [Limitations](#limitations).
+
+For each likelihood, cohorts were simulated at four visit counts per
+patient (1, 2, 3, 6) and fit two ways — classic (stacked, independent-visit)
+and MV-SuStaIn (longitudinal, joint-likelihood) — on the *same* simulated
+training data, so the only thing that differs between the two fits is the
+training likelihood mechanism, not the data.
 
 Each of the 16 (likelihood × visit-count × mode) conditions was repeated
 across **12 seeds**, with the classic and MV-SuStaIn fit of a given
@@ -48,34 +53,44 @@ in this public release, since it depends on the private research harness
 — the method implementation itself, in this repository, is what matters
 for reproducing the mechanism).
 
-Sequence recovery is scored against the known ground-truth generative
-sequence (Kendall's tau); subtype recovery is scored against the known
-ground-truth subtype label (ARI, permutation accuracy). Per the project's
-own methodology (classic SuStaIn's post-hoc visit-combination is a valid,
-necessary step for it, but is not the correct comparison point for
-MV-SuStaIn, whose default output already reflects the full joint-visit
-posterior — using it there would inflate confidence), classic SuStaIn is
-scored on its post-hoc metric and MV-SuStaIn on its unconstrained metric,
-except at 1 visit, where the two are mathematically identical and no
-post-hoc combination applies to either model.
+**Evaluation uses a held-out test set, not the training cohort.** Every fit
+is additionally scored against an independent, freshly-simulated
+**2000-patient test cohort** (fixed seed, same generative process, disjoint
+from the 60 training patients) at the matching visit-count group. Subtype
+recovery (ARI, permutation accuracy) and stage accuracy are read from this
+held-out evaluation; fitting a model and re-scoring it on its own training
+data would not be a generalization claim. Sequence recovery (Kendall's tau)
+has no test-set equivalent — it scores the sequence recovered from the
+training fit against the known ground-truth generative sequence, not a
+per-patient prediction — so it is read from the training fit itself.
+
+Per the project's own methodology (classic SuStaIn's post-hoc
+visit-combination is a valid, necessary step for it, but is not the correct
+comparison point for MV-SuStaIn, whose default output already reflects the
+full joint-visit posterior — using it there would inflate confidence),
+classic SuStaIn is scored on its post-hoc test metric and MV-SuStaIn on its
+unconstrained test metric, except at 1 visit, where the two are
+mathematically identical and no post-hoc combination applies to either
+model.
 
 ## 3. Results
 
 ![Headline comparison figure](headline_figure.png)
 
 *Mean ± SD across 12 paired repeats. Dashed grey: classic SuStaIn. Solid
-blue: MV-SuStaIn.*
+blue: MV-SuStaIn. ARI is on the held-out 2000-patient test set; Kendall's
+tau is a training-fit property (see above).*
 
 | Likelihood | Visits | ARI (MV) | ARI (classic) | p | Kendall-τ (MV) | Kendall-τ (classic) | p |
 |---|---|---|---|---|---|---|---|
-| Ordinal | 1 | 0.323 | 0.323 | — | 0.931 | 0.931 | — |
-| Ordinal | 2 | 0.731 | 0.719 | 0.82 | 0.957 | 0.953 | 0.45 |
-| Ordinal | 3 | 0.905 | 0.800 | 0.16 | 0.970 | 0.955 | 0.38 |
-| Ordinal | 6 | 0.989 | 0.941 | 0.50 | 0.980 | 0.960 | 0.13 |
-| Z-score | 1 | 0.074 | 0.074 | — | 0.744 | 0.744 | — |
-| Z-score | 2 | 0.161 | 0.160 | 0.58 | 0.766 | 0.740 | 0.31 |
-| Z-score | 3 | 0.336 | 0.345 | 0.70 | 0.775 | 0.759 | 0.41 |
-| Z-score | 6 | 0.311 | 0.237 | 0.23 | 0.778 | 0.754 | 0.14 |
+| Ordinal | 1 | 0.302 | 0.302 | — | 0.931 | 0.931 | — |
+| Ordinal | 2 | 0.751 | 0.733 | 0.91 | 0.957 | 0.953 | 0.45 |
+| Ordinal | 3 | 0.893 | 0.812 | 0.34 | 0.970 | 0.955 | 0.38 |
+| Ordinal | 6 | 0.989 | 0.947 | 0.09 | 0.980 | 0.960 | 0.13 |
+| Z-score | 1 | 0.068 | 0.068 | — | 0.744 | 0.744 | — |
+| Z-score | 2 | 0.130 | 0.145 | 0.27 | 0.766 | 0.740 | 0.31 |
+| Z-score | 3 | 0.328 | 0.324 | 0.97 | 0.775 | 0.759 | 0.41 |
+| Z-score | 6 | 0.288 | 0.248 | 0.42 | 0.778 | 0.754 | 0.14 |
 
 (p = two-sided Wilcoxon signed-rank, paired across the 12 shared-seed
 repeats; full table with all four metrics in `aggregate_summary.csv`.)
@@ -94,14 +109,14 @@ This is directionally consistent with the hypothesis that joint-visit
 training helps more as more visits become available, and it is the
 cleanest single trend in this dataset.
 
-**Z-score likelihood:** the pattern is less consistent — ARI is
-essentially tied at 2-3 visits and only diverges in MV-SuStaIn's favor at
-6 visits; direction is not monotonic across visit counts. This does not
-replicate an earlier, informal finding (from before a June 2026 fix to the
-simulation's noise handling) that MV-SuStaIn was *worse* on z-score
-staging — the current, corrected picture is a wash rather than a
-disadvantage, which is itself worth noting but is not a strong claim
-either way.
+**Z-score likelihood:** the pattern is less consistent — classic SuStaIn's
+test-set ARI is slightly *ahead* at 2 visits, the two are essentially tied
+at 3, and MV-SuStaIn is ahead at 6; direction is not monotonic across visit
+counts. This does not replicate an earlier, informal finding (from before
+a June 2026 fix to the simulation's noise handling) that MV-SuStaIn was
+*worse* on z-score staging — the current, corrected picture is a wash
+rather than a disadvantage, which is itself worth noting but is not a
+strong claim either way.
 
 ## 4. Limitations
 
@@ -112,11 +127,24 @@ either way.
   this study is underpowered to detect the effect sizes observed here at
   p < 0.05. The trends above should be read as consistent with the
   hypothesis, not as proof of it.
-- Simulated data only, at one set of noise/simulation settings. Real-cohort
-  behavior (the subject of ongoing work) may differ.
+- Simulated data only, at a single, comparatively favorable noise/difficulty
+  setting (ordinal correctness probability 0.9, z-score noise σ=1.0). This
+  codebase's own reference experiments also define a harder configuration
+  (correctness probability 0.8, a less separable noise structure, σ=1.5)
+  that this study did not run; the gap between MV-SuStaIn and classic
+  SuStaIn plausibly widens under harder, noisier conditions where the
+  extra visits matter more for disambiguation, but that is a hypothesis
+  for follow-up, not a claim made here.
+- Sample size is modest by real-world standards (60 training patients per
+  condition) and only 4 biomarkers / 12 total events were simulated, for
+  compute-time reasons. Larger cohorts and biomarker panels are within the
+  method's scope but untested here.
+- Real-cohort behavior (the subject of ongoing work) may differ from any
+  simulation study, however parameterized.
 - A larger-repeat follow-up (targeting statistical significance on the
-  ordinal Kendall's-tau result specifically) and real-cohort validation
-  are both in progress.
+  ordinal Kendall's-tau result specifically), a harder-noise-setting
+  follow-up, and real-cohort validation are all natural next steps and are
+  in progress or planned.
 
 ## Data & Code Availability
 
