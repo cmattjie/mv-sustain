@@ -414,6 +414,8 @@ class SustainRunner:
         patient_ids: Optional[Sequence[object]] = None,
         p_correct_mode: str = "fixed",
         X_obs_raw: Optional[np.ndarray] = None,
+        plot: bool = False,
+        plot_format: str = "png",
     ) -> "SustainRunner":
         self.initialize_model(
             X_train,
@@ -434,7 +436,7 @@ class SustainRunner:
         )
 
         # Run EM + MCMC in pySuStaIn and unpack standard outputs.
-        out = self.model_.run_sustain_algorithm()
+        out = self.model_.run_sustain_algorithm(plot=plot, plot_format=plot_format)
         if not (isinstance(out, (tuple, list)) and len(out) == 7):
             raise RuntimeError(
                 "Unexpected run_sustain_algorithm output. CHECK pySuStaIn version and expected tuple length."

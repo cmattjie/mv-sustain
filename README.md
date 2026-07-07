@@ -59,6 +59,23 @@ it, to demonstrate the API end-to-end. It is intentionally small and fast —
 see the script's docstring for details, and treat its output as a sanity
 check rather than a performance benchmark.
 
+It also produces a positional variance diagram (PVD) for each model —
+pySuStaIn's standard visualization of the inferred subtype sequences, showing
+for each subtype which biomarker tends to cross into abnormality at which
+stage:
+
+| Classic (stacked) SuStaIn | MV-SuStaIn (longitudinal) |
+|---|---|
+| ![Classic SuStaIn PVD](examples/output/classic_sustain_pvd.png) | ![MV-SuStaIn PVD](examples/output/mv_sustain_pvd.png) |
+
+On this small, well-separated toy dataset the two methods recover the same
+group-level sequences — the difference between them here is in per-patient
+subtype-assignment accuracy (a quantitative effect of aggregating each
+patient's visits before assigning), not in the shape of the recovered
+sequences themselves. Divergence in the recovered sequences is more likely
+to appear with noisier or more ambiguous data; this demo is not tuned to
+show that.
+
 Minimal usage sketch:
 
 ```python

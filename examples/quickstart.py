@@ -79,7 +79,7 @@ def main() -> None:
 
     print("Fitting classic (stacked, independent-visit) SuStaIn...")
     stacked = SustainRunner(output_folder="/tmp/mv_sustain_quickstart/stacked", **common_kwargs)
-    stacked.fit(X_train, Z_vals=Z_vals, Z_max=Z_max, sigma_noise=NOISE_SIGMA)
+    stacked.fit(X_train, Z_vals=Z_vals, Z_max=Z_max, sigma_noise=NOISE_SIGMA, plot=True)
 
     print("Fitting MV-SuStaIn (joint patient-level likelihood)...")
     longitudinal = SustainRunner(
@@ -89,7 +89,12 @@ def main() -> None:
         **common_kwargs,
     )
     longitudinal.fit(
-        X_train, Z_vals=Z_vals, Z_max=Z_max, sigma_noise=NOISE_SIGMA, patient_ids=patient_ids
+        X_train,
+        Z_vals=Z_vals,
+        Z_max=Z_max,
+        sigma_noise=NOISE_SIGMA,
+        patient_ids=patient_ids,
+        plot=True,
     )
 
     # One ground-truth subtype label per patient (repeat to match the per-visit rows).
