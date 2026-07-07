@@ -48,7 +48,7 @@ algorithm layer, not the research pipeline built on top of it.
 ## Installation
 
 ```bash
-git clone https://github.com/<your-org-or-username>/mv-sustain.git
+git clone https://github.com/cmattjie/mv-sustain.git
 cd mv-sustain
 pip install -e .
 ```
