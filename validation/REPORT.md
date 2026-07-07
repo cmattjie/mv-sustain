@@ -8,6 +8,12 @@ classic SuStaIn (independent-visit training) on synthetic data. It is
 released as a snapshot of ongoing work, not as a completed validation —
 see [Limitations](#limitations) before drawing conclusions from it.
 
+**Update:** [Section 4](#4-follow-up-harder-noise-larger-cohort-more-subtypes)
+adds a follow-up under harder noise, a larger cohort, and more subtypes,
+where MV-SuStaIn's advantage becomes large and statistically significant —
+unlike the main study in Section 3, which does not reach significance.
+Read both sections; they are separate studies with separate conclusions.
+
 ---
 
 ## 1. Background
@@ -118,39 +124,82 @@ a June 2026 fix to the simulation's noise handling) that MV-SuStaIn was
 rather than a disadvantage, which is itself worth noting but is not a
 strong claim either way.
 
-## 4. Limitations
+## 4. Follow-up: harder noise, larger cohort, more subtypes
 
-- **No result in this report reaches conventional statistical
-  significance** (all Wilcoxon p ≥ 0.0625, across all four metrics in
-  `aggregate_summary.csv`, not just the two tabulated above). With only 12
-  paired repeats,
-  this study is underpowered to detect the effect sizes observed here at
-  p < 0.05. The trends above should be read as consistent with the
-  hypothesis, not as proof of it.
-- Simulated data only, at a single, comparatively favorable noise/difficulty
-  setting (ordinal correctness probability 0.9, z-score noise σ=1.0). This
-  codebase's own reference experiments also define a harder configuration
-  (correctness probability 0.8, a less separable noise structure, σ=1.5)
-  that this study did not run; the gap between MV-SuStaIn and classic
-  SuStaIn plausibly widens under harder, noisier conditions where the
-  extra visits matter more for disambiguation, but that is a hypothesis
-  for follow-up, not a claim made here.
-- Sample size is modest by real-world standards (60 training patients per
-  condition) and only 4 biomarkers / 12 total events were simulated, for
-  compute-time reasons. Larger cohorts and biomarker panels are within the
-  method's scope but untested here.
+The study above used one comparatively favorable setting (ordinal
+correctness probability 0.9, 60 training patients, 2 subtypes). This
+follow-up changes three things at once — noise (correctness probability
+**0.8**), cohort size (**500** training patients), and subtype count
+(**2 or 3**) — to test whether the MV-SuStaIn advantage holds up, and
+whether it depends on any of these. Ordinal likelihood only; visit counts
+2 and 6; same paired-seed design and held-out 2000-patient test evaluation
+as above; 12 repeats per condition.
+
+![Hard-noise follow-up figure](hard_ordinal_figure.png)
+
+| Subtypes | Visits | ARI (MV) | ARI (classic) | p | Kendall-τ (MV) | Kendall-τ (classic) | p |
+|---|---|---|---|---|---|---|---|
+| 2 | 2 | 0.573 | 0.523 | 0.064 | 0.979 | 0.966 | 0.094 |
+| 2 | 6 | 0.947 | 0.922 | 0.38 | 0.990 | 0.971 | **0.016** |
+| 3 | 2 | 0.453 | 0.341 | **0.009** | 0.966 | 0.912 | **0.005** |
+| 3 | 6 | 0.912 | 0.689 | **0.0005** | 0.985 | 0.900 | **0.0005** |
+
+**This is a materially different result from the rest of the report: at 3
+subtypes, MV-SuStaIn reaches conventional statistical significance on most
+metrics.** At 6 visits, all four metrics in `aggregate_summary.csv`
+(accuracy, ARI, Kendall's tau, stage accuracy) are significant at
+p=0.0005 — the minimum possible value at n=12, because MV-SuStaIn won all
+12 of 12 paired repeats on both ARI and Kendall's tau, zero losses, zero
+ties. At 2 visits, three of the four metrics are significant (accuracy,
+ARI, Kendall's tau: p≤0.0093) but **stage accuracy is not** (p=0.064) — a
+real exception, not one to round away. At 2 subtypes under this same
+harder/larger setting, the picture is closer to the original report —
+mostly not significant, except Kendall's tau at 6 visits (p=0.016).
+
+**Interpretation, with an honest caveat**: because noise, cohort size, and
+subtype count all changed together relative to the main study, this cannot
+isolate which factor drives the much larger effect at 3 subtypes. The
+closest thing to a controlled contrast in this data is 2-vs-3 subtypes at
+matched noise and cohort size, which points at **subtype count** as the
+likely main driver — mechanistically plausible, since disentangling more
+candidate progression patterns from noisy per-visit data is exactly the
+harder disambiguation problem where pooling a patient's visits into one
+joint decision should matter most. But this is an inference from
+observational data, not a controlled ablation, and is offered as a
+hypothesis this follow-up strengthens rather than a settled conclusion.
+
+**Verification**: `metrics_test_by_visits[...]['posthoc']` was spot-checked
+against `['unconstrained']` for a classic-mode run to confirm the two
+differ substantially in the expected direction (posthoc much higher,
+since a single-visit posterior is naturally noisy) — i.e., the
+posthoc/unconstrained methodology is doing real work here, not
+coincidentally returning similar numbers regardless of which is used.
+
+## 5. Limitations
+
+- **The main study (Section 3) reaches no statistically significant
+  result** (all Wilcoxon p ≥ 0.0625). **The follow-up (Section 4) does**,
+  but only at 3 subtypes — at 2 subtypes under the same harder/larger
+  setting, results are still mostly non-significant. Read Sections 3 and 4
+  as separate studies with separate conclusions, not one pooled result.
+- Both studies are simulated data only. The follow-up changed noise,
+  cohort size, and subtype count simultaneously (see Section 4's caveat on
+  attribution); a proper ablation isolating each factor is still open.
+- The main study's cohort size (60 training patients, 4 biomarkers) is
+  modest by real-world standards; the follow-up used 500 patients but the
+  same 4 biomarkers.
 - Real-cohort behavior (the subject of ongoing work) may differ from any
   simulation study, however parameterized.
-- A larger-repeat follow-up (targeting statistical significance on the
-  ordinal Kendall's-tau result specifically), a harder-noise-setting
-  follow-up, and real-cohort validation are all natural next steps and are
-  in progress or planned.
+- Remaining open work: an ablation isolating subtype count from noise and
+  cohort size; a z-score version of the hard-noise follow-up (this one
+  was ordinal-only); and real-cohort validation.
 
 ## Data & Code Availability
 
-Code: this repository (MIT license). Raw per-repeat results and full
-metric table: `validation/aggregate_summary.csv`. Simulated data only; no
-real patient data was used in this study.
+Code: this repository (MIT license). Simulated data only; no real patient
+data was used in this study. Full metric tables: `validation/aggregate_summary.csv`
+(main study, Section 3), `validation/hard_ordinal_k2_summary.csv` and
+`validation/hard_ordinal_k3_summary.csv` (follow-up, Section 4).
 
 ## References
 
