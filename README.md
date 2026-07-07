@@ -36,6 +36,15 @@ the full validation study, simulation harness, and clinical application
 work live. This repository is kept intentionally minimal: it's the reusable
 algorithm layer, not the research pipeline built on top of it.
 
+## Requirements
+
+- Python 3.9+ (developed and tested on 3.11)
+- `git` on your PATH — pip installs pySuStaIn directly from its GitHub
+  repository, since it isn't published on PyPI
+- ~1.5GB free disk space for dependencies (see the CPU-only note below;
+  a default install can balloon to ~5GB by pulling GPU support you likely
+  don't need)
+
 ## Installation
 
 ```bash
@@ -43,6 +52,21 @@ git clone https://github.com/<your-org-or-username>/mv-sustain.git
 cd mv-sustain
 pip install -e .
 ```
+
+**If you don't need GPU acceleration** (most usage — the fitting itself is
+CPU-bound; `torch` is only used for a few tensor ops in the z-score
+likelihood), install a CPU-only PyTorch *first*, then install this package.
+This avoids pulling PyTorch's default CUDA build and several GB of NVIDIA
+dependencies that most machines won't use:
+
+```bash
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+pip install -e .
+```
+
+Both install paths were verified from a clean virtual environment (no
+pre-existing dependencies) before release — the CPU-only path finishes in
+about a minute and installs ~1.4GB instead of ~5GB.
 
 This pulls in [pySuStaIn](https://github.com/ucl-pond/pySuStaIn) directly
 from its GitHub repository (it is not published on PyPI).
