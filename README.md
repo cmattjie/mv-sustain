@@ -98,6 +98,15 @@ runner.fit(X_train, Z_vals=Z_vals, Z_max=Z_max, sigma_noise=1.0, patient_ids=pat
 print(runner.fit_result_.ml_subtype, runner.fit_result_.ml_stage)
 ```
 
+## Validation
+
+[`validation/REPORT.md`](validation/REPORT.md) — a preliminary simulation
+study comparing MV-SuStaIn against classic SuStaIn on synthetic data across
+two likelihoods and several visit counts. **Explicitly preliminary**: no
+result in it reaches statistical significance at its current sample size
+(12 paired repeats); it reports directional trends, not proof, and says so.
+A larger-repeat follow-up and real-cohort validation are in progress.
+
 ## Citing this work
 
 If you use this package, please cite the original SuStaIn papers (per
@@ -115,10 +124,12 @@ pySuStaIn's own citation request):
    Ordinal Data. *Front Artif Intell*. 2021;4:613261.
    https://doi.org/10.3389/frai.2021.613261
 
-A citable reference for the longitudinal (MV-SuStaIn) extension itself will
-be added here once available (manuscript/thesis in preparation). See
-`CITATION.cff` for a machine-readable citation of this software as it
-currently stands.
+A citable reference for the longitudinal (MV-SuStaIn) extension's full,
+peer-reviewed validation will be added here once available
+(manuscript/thesis in preparation). In the meantime, see
+[`validation/REPORT.md`](validation/REPORT.md) for a preliminary simulation
+study, and `CITATION.cff` for a machine-readable citation of this software
+as it currently stands.
 
 ## License
 
