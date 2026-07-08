@@ -1,5 +1,9 @@
 # mv-sustain
 
+[![CI](https://github.com/cmattjie/mv-sustain/actions/workflows/ci.yml/badge.svg)](https://github.com/cmattjie/mv-sustain/actions/workflows/ci.yml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21248939.svg)](https://doi.org/10.5281/zenodo.21248939)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A longitudinal, multi-visit extension of the **SuStaIn** (Subtype and Stage Inference) algorithm, built on top of [pySuStaIn](https://github.com/ucl-pond/pySuStaIn), the reference Python implementation by Leon Aksman, Peter Wijeratne, and collaborators at the UCL POND group.
 
 SuStaIn jointly infers, from cross-sectional data, (a) a small number of distinct progression sequences ("subtypes") and (b) each individual's position along their subtype's sequence ("stage") — separating *which pattern* someone follows from *how far along* they are, without needing longitudinal follow-up.
@@ -18,9 +22,9 @@ This repository provides:
 - **`Longitudinal*Sustain`** classes — the joint patient-level likelihood extension (MV-SuStaIn), for both z-score and ordinal likelihoods.
 - **`SustainRunner`** — a single entry point that routes to the correct model class given a likelihood type and a `use_longitudinal_likelihood` flag, so most users won't need to touch the model classes directly.
 
-## Status
+## Scope
 
-This is research software under active development. The code here is a periodically-updated extract of a larger, private research codebase where the full validation study, simulation harness, and clinical application work live. This repository is kept intentionally minimal: it's the reusable algorithm layer, not the research pipeline built on top of it.
+This package provides the MV-SuStaIn algorithm itself: the model classes, the joint-likelihood mechanism, and a single entry point (`SustainRunner`) for fitting and predicting with either the classic or longitudinal likelihood. It is maintained as a focused, standalone implementation of the method, distinct from the research programme built on top of it — simulation studies, cohort-specific data pipelines, and clinical applications — which are developed and validated separately and published here as results mature, starting with the simulation study in [`validation/REPORT.md`](validation/REPORT.md). Development is active; releases are tagged and archived on Zenodo (DOI badge above) as the method and its validation evolve.
 
 ## Requirements
 
@@ -106,7 +110,7 @@ Please also cite the paper for whichever progression-pattern model you use:
 4. Ordinal likelihood: Young AL, Vogel JW, Robinson JL, et al. Ordinal SuStaIn: Subtype and Stage Inference for Clinical Rating Scale and Ordinal Data. *Front Artif Intell*. 2021;4:613261. https://doi.org/10.3389/frai.2021.613261
 5. Mixture (event-based) likelihood: https://doi.org/10.1016/j.neuroimage.2012.01.062, plus https://doi.org/10.1093/brain/awu176 if using Gaussian mixture modeling or https://doi.org/10.1002/alz.12083 if using kernel density estimation.
 
-A citable reference for the longitudinal (MV-SuStaIn) extension's full, peer-reviewed validation will be added here once available (manuscript/thesis in preparation). In the meantime, see [`validation/REPORT.md`](validation/REPORT.md) for a preliminary simulation study, and `CITATION.cff` for a machine-readable citation of this software as it currently stands.
+To cite this software itself, use the DOI badge at the top of this page (which always resolves to the latest archived release) or the machine-readable citation in `CITATION.cff`. A citable reference for the longitudinal (MV-SuStaIn) extension's full, peer-reviewed validation will be added here once available (manuscript/thesis in preparation); in the meantime, see [`validation/REPORT.md`](validation/REPORT.md) for the current preliminary simulation study.
 
 ## License
 
