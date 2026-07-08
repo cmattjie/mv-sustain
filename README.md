@@ -6,6 +6,12 @@ SuStaIn jointly infers, from cross-sectional data, (a) a small number of distinc
 
 Classic SuStaIn scores each observation (each visit) independently. When a cohort instead has multiple visits per patient, that independence assumption discards information: knowing that several visits belong to the same person constrains which subtype and stage they can plausibly occupy. **MV-SuStaIn** ("Multi-Visit SuStaIn") addresses this by aggregating a patient's visits into a single joint likelihood *before* inferring subtype and stage, so repeated observations reinforce one another instead of being treated as unrelated data points.
 
+### Why pooling visits should help
+
+If a patient's visits are conditionally independent given their (unknown, fixed) subtype and each visit's own stage, the statistically correct likelihood for identifying that patient's subtype is the *product* of the per-visit likelihoods, not any single visit's likelihood taken alone. MV-SuStaIn optimizes against that joint, patient-level likelihood directly, rather than approximating it after the fact by combining independently-trained per-visit posteriors post hoc.
+
+This also predicts *when* the benefit should be largest: pooling several noisy observations reduces uncertainty in roughly the same way that averaging repeated noisy measurements does, so it should help most when a single visit's signal is weak or ambiguous, and least when one visit already pins down the subtype with confidence. That is consistent with what [`validation/REPORT.md`](validation/REPORT.md) actually finds: the advantage is small and inconsistent under easy, well-separated simulation conditions, and becomes large and statistically significant once the disambiguation problem gets harder (noisier data, more overlapping subtypes) — exactly where combining several partially-informative visits should matter most. This is offered as the hypothesis behind the design, not as a claim the current validation work has fully settled; see that report's own limitations.
+
 This repository provides:
 
 - **`Stacked*Sustain`** classes — classic, independent-visit SuStaIn, provided as the fair baseline for comparison.
