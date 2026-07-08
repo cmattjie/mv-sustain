@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mv-sustain"
-version = "0.1.1"
+version = "0.1.2"
 description = "A longitudinal, multi-visit extension of the SuStaIn subtype/stage inference algorithm"
 readme = "README.md"
 license = { file = "LICENSE" }

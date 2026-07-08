@@ -5,8 +5,8 @@ message: >-
   methodology papers to cite as well.
 type: software
 title: mv-sustain
-version: 0.1.1
-date-released: "2026-07-07"
+version: 0.1.2
+date-released: "2026-07-08"
 abstract: >-
   A longitudinal, multi-visit extension of the SuStaIn (Subtype and Stage
   Inference) algorithm, built on pySuStaIn, adding a joint patient-level
