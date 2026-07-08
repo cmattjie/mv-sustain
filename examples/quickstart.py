@@ -1,14 +1,7 @@
 """
-Minimal end-to-end demo: simulate a small multi-visit z-score cohort with two
-known progression subtypes, then fit both the classic (stacked, independent-
-visit) and the longitudinal (joint patient-level likelihood) SuStaIn variants
-on the *same* data, and compare subtype-assignment accuracy against ground
-truth.
+Minimal end-to-end demo: simulate a small multi-visit z-score cohort with two known progression subtypes, then fit both the classic (stacked, independent-visit) and the longitudinal (joint patient-level likelihood) SuStaIn variants on the *same* data, and compare subtype-assignment accuracy against ground truth.
 
-This is deliberately small and fast (a few dozen patients, short MCMC chains)
-so it runs on a laptop in well under a minute. It is meant to demonstrate the
-API, not to be a benchmark — see the accompanying paper/thesis chapter for
-the full validation study.
+This is deliberately small and fast (a few dozen patients, short MCMC chains) so it runs on a laptop in well under a minute. It is meant to demonstrate the API, not to be a benchmark — see the accompanying paper/thesis chapter for the full validation study.
 
 Usage:
     python examples/quickstart.py

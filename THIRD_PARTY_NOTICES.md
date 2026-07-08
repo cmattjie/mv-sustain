@@ -1,15 +1,8 @@
 # Third-Party Notices
 
-This project is a derivative work that adapts and extends
-[pySuStaIn](https://github.com/ucl-pond/pySuStaIn), the reference Python
-implementation of the Subtype and Stage Inference (SuStaIn) algorithm.
-Several modules here subclass or copy-and-modify pySuStaIn internals in
-order to add a joint patient-level (longitudinal) likelihood; per the terms
-of pySuStaIn's MIT license, its original copyright and permission notice is
-reproduced in full below.
+This project is a derivative work that adapts and extends [pySuStaIn](https://github.com/ucl-pond/pySuStaIn), the reference Python implementation of the Subtype and Stage Inference (SuStaIn) algorithm, created by Leon Aksman and Peter Wijeratne. Several modules here subclass or copy-and-modify pySuStaIn internals in order to add a joint patient-level (longitudinal) likelihood; per the terms of pySuStaIn's MIT license, its original copyright and permission notice is reproduced verbatim below, exactly as it appears in pySuStaIn's own `LICENSE.txt`.
 
-If you use this software, please also cite the papers pySuStaIn itself asks
-to be cited (see README.md `Citing this work`).
+If you use this software, please also cite the papers pySuStaIn itself asks to be cited — see the "Citing this work" section of `README.md` for the full list.
 
 ## pySuStaIn License
 

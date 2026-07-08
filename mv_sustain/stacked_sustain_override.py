@@ -1,20 +1,12 @@
 """
 Stacked SuStaIn variants for the independent-visit training path.
 
-In stacked (classic) SuStaIn, each visit is treated as independent during
-training — there is no joint patient-level pooling. At inference, the post-hoc
-longitudinal constraint (product of per-visit posteriors) can be applied to
-combine visits for a single patient, but this is separate from training.
+In stacked (classic) SuStaIn, each visit is treated as independent during training — there is no joint patient-level pooling. At inference, the post-hoc longitudinal constraint (product of per-visit posteriors) can be applied to combine visits for a single patient, but this is separate from training.
 
 These classes:
-  - Inherit the corrected likelihood stages from the local zscore/ordinal overrides
-    (sigma_noise wiring, normalization constant fix, missing-data policy).
-  - Use the cache-recomputation optimisation from _LongitudinalLikelihoodMixin by
-    treating each visit as its own trivial single-visit patient. With a trivial
-    patient_index = [0, 1, ..., M-1], the longitudinal stats reduce to the classic
-    per-visit EM — same mathematics, faster computation.
-  - Fix the possible_positions edge case (np.array([move_event_to_lower_bound])
-    instead of the pySuStaIn bug np.array([0])) for all code paths.
+  - Inherit the corrected likelihood stages from the local zscore/ordinal overrides (sigma_noise wiring, normalization constant fix, missing-data policy).
+  - Use the cache-recomputation optimisation from _LongitudinalLikelihoodMixin by treating each visit as its own trivial single-visit patient. With a trivial patient_index = [0, 1, ..., M-1], the longitudinal stats reduce to the classic per-visit EM — same mathematics, faster computation.
+  - Fix the possible_positions edge case (np.array([move_event_to_lower_bound]) instead of the pySuStaIn bug np.array([0])) for all code paths.
   - Have no MV-specific branching: they are unconditionally stacked.
 
 Class hierarchy:

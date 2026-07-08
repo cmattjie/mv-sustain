@@ -4,8 +4,7 @@
 """
 Thin wrapper around pySuStaIn models.
 
-The goal is to provide strict, explicit wiring for simulation/fitting/prediction
-without guessing APIs, while keeping outputs consistent across likelihood types.
+The goal is to provide strict, explicit wiring for simulation/fitting/prediction without guessing APIs, while keeping outputs consistent across likelihood types.
 """
 
 from __future__ import annotations

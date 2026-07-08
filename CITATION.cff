@@ -1,16 +1,12 @@
 cff-version: 1.2.0
 message: >-
-  If you use this software, please cite it as below, and see the
-  "Citing this work" section of README.md for the underlying SuStaIn
-  methodology papers to cite as well.
+  If you use this software, please cite it as below, and see the "Citing this work" section of README.md for the underlying SuStaIn methodology papers to cite as well.
 type: software
 title: mv-sustain
 version: 0.1.2
 date-released: "2026-07-08"
 abstract: >-
-  A longitudinal, multi-visit extension of the SuStaIn (Subtype and Stage
-  Inference) algorithm, built on pySuStaIn, adding a joint patient-level
-  likelihood for cohorts with repeated visits per patient.
+  A longitudinal, multi-visit extension of the SuStaIn (Subtype and Stage Inference) algorithm, built on pySuStaIn, adding a joint patient-level likelihood for cohorts with repeated visits per patient.
 authors:
   - family-names: Mattjie
     given-names: Christian
@@ -20,9 +16,7 @@ license: MIT
 repository-code: "https://github.com/cmattjie/mv-sustain"
 references:
   - type: article
-    title: >-
-      Uncovering the heterogeneity and temporal complexity of
-      neurodegenerative diseases with Subtype and Stage Inference
+    title: "Uncovering the heterogeneity and temporal complexity of neurodegenerative diseases with Subtype and Stage Inference"
     authors:
       - family-names: Young
         given-names: Alexandra L.
@@ -34,6 +28,8 @@ references:
     authors:
       - family-names: Aksman
         given-names: Leon M.
+      - family-names: Wijeratne
+        given-names: Peter A.
     year: 2021
     journal: SoftwareX
     doi: 10.1016/j.softx.2021.100811
