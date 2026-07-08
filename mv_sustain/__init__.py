@@ -13,7 +13,7 @@ Two model families are provided for each supported likelihood
 - Stacked* classes: classic, independent-visit SuStaIn (each visit trained
   as its own trivial patient). Provided as the fair baseline for comparison.
 - Longitudinal* classes: the joint patient-level likelihood extension
-  (MV-SuStaIn).
+  (MV-SuStaIn, "Multi-Visit SuStaIn").
 
 `SustainRunner` (in `sustain_utils`) is the recommended entry point — it
 routes to the correct class given a likelihood type and a

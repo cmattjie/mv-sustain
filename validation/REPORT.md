@@ -2,9 +2,10 @@
 
 **Status: preliminary / observational. Full-power validation is ongoing.**
 
-This report describes a small simulation study comparing MV-SuStaIn (a
-longitudinal, joint patient-level likelihood extension of SuStaIn) against
-classic SuStaIn (independent-visit training) on synthetic data. It is
+This report describes a small simulation study comparing MV-SuStaIn
+("Multi-Visit SuStaIn" — a longitudinal, joint patient-level likelihood
+extension of SuStaIn) against classic SuStaIn (independent-visit training)
+on synthetic data. It is
 released as a snapshot of ongoing work, not as a completed validation —
 see [Limitations](#limitations) before drawing conclusions from it.
 

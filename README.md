@@ -14,9 +14,10 @@ Classic SuStaIn scores each observation (each visit) independently. When a
 cohort instead has multiple visits per patient, that independence assumption
 discards information: knowing that several visits belong to the same person
 constrains which subtype and stage they can plausibly occupy. **MV-SuStaIn**
-addresses this by aggregating a patient's visits into a single joint
-likelihood *before* inferring subtype and stage, so repeated observations
-reinforce one another instead of being treated as unrelated data points.
+("Multi-Visit SuStaIn") addresses this by aggregating a patient's visits
+into a single joint likelihood *before* inferring subtype and stage, so
+repeated observations reinforce one another instead of being treated as
+unrelated data points.
 
 This repository provides:
 
