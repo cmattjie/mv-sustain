@@ -3,7 +3,7 @@ message: >-
   If you use this software, please cite it as below, and see the "Citing this work" section of README.md for the underlying SuStaIn methodology papers to cite as well.
 type: software
 title: mv-sustain
-version: 0.1.2
+version: 0.1.3
 date-released: "2026-07-08"
 abstract: >-
   A longitudinal, multi-visit extension of the SuStaIn (Subtype and Stage Inference) algorithm, built on pySuStaIn, adding a joint patient-level likelihood for cohorts with repeated visits per patient.

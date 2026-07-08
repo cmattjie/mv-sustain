@@ -22,7 +22,7 @@ from .zscore_override import ZscoreSustain
 from .ordinal_override import OrdinalSustain
 from .mixture_override import MixtureSustain
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 __all__ = [
     "SustainRunner",
